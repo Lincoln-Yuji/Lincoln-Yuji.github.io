@@ -1,3 +1,8 @@
+---
+title: Ambiente de desenvolvimento de um Kernel
+tags: [linux]     # TAG names should always be lowercase
+---
+
 # Criando um ambiente de desenvolvimento para o Kernel Linux
 
 Assim como qualquer outro software, contribuir para o kernel do
