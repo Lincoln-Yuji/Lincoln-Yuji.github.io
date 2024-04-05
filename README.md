@@ -1,3 +1,5 @@
-Blog Posts
+# Blog posts showing my Computer Science journey.
 
-Blog page generated using Chirpy. The blog itself can be accessed [here](https://lincoln-yuji.github.io/).
+Blog Site generated using Github Pages and the `Chirpy` theme for `Jekyll`.
+
+The blog itself can be accessed [here](https://lincoln-yuji.github.io/).
