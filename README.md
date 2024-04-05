@@ -1,4 +1,4 @@
-# Blog posts showing my Computer Science journey.
+# Blog posts showing my Computer Science journey
 
 Blog Site generated using Github Pages and the `Chirpy` theme for `Jekyll`.
 
