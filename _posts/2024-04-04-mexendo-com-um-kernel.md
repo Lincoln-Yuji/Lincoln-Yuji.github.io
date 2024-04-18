@@ -1,6 +1,6 @@
 ---
 title: Ambiente de desenvolvimento de um Kernel
-categories: [FOSS, USP]
+categories: [USP, MAC0470]
 tags: [linux, bash]     # TAG names should always be lowercase
 ---
 
