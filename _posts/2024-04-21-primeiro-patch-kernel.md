@@ -50,13 +50,59 @@ Tendo as devidas alterações no driver, escrevemos a mensagem de commit e devid
 
 ![Desktop View](/assets/img/iio_log.png){: w="700" h="400" }
 
-Usamos o prórprio git para criar e enviar o patch para os nossos monitores da disciplina:
+Usamos o próprio git para criar e enviar o patch para os nossos monitores da disciplina:
 
 ```bash
 $ git format-patch --to=<EMAIL> HEAD~1
 $ git send-email *.patch
 ```
 
-Para enviar o patch para os contribuidores do kernel, podemos usar o [kworkflow](https://github.com/kworkflow/kworkflow) a fim de facilitar a tarefa.
+Talvez você pode acabar encontrando problemas com a configuração do SMTP na hora que rodar o comando `git send-email`. Uma maneira de resolver isso facilmente é usando o próprio `kworkflow` para a tarefa:
 
-No entanto, estamos aguardando a avaliação e aprovação dos nossos monitores antes de fazer o envio.
+```bash
+$ kw mail --interactive
+```
+
+Siga os passos que serão mostrados e então, com essa configuração, rode o comando novamente para enviar os patches por email.
+**Essa configuração é importante, pois o kw usa o send-email por baixo dos panos para enviar os emails para os mantenedores**.
+
+Para enviar o patch para os contribuidores do kernel, podemos usar o [kworkflow](https://github.com/kworkflow/kworkflow) a fim de facilitar a tarefa. Como a nossa contribuição possui apenas um commit, para criar e enviar esse patch por email para
+os mantenedores basta certificarmos que estamos no diretório raíz do diretório e então:
+
+```bash
+$ kw mail --send
+```
+
+Esse comando irá automaticamente detectar qual é o email dos mantenedores e para quais emails esse pacth será mandado além
+dos próprios mantenedores, por exemplo o autor e co-autores do commit.
+
+Algo que pode ser útil caso a sua contribuição tenha múltiplos commits:
+
+```bash
+$ kw mail --send HEAD~<N>
+```
+
+Com esse comando, o kw irá criar um `patchset` com os últimos `N` commits da sua branch modificada a partir da `HEAD`.
+
+## Patch aceito pelos mantenedores
+
+As primeiras versões de patch que enviamos tiveram alguns erros de formatação da mensagem de commit que tiveram que ser
+consertados:
+
+- Utilização desnecessária da tag `From:` que causou um erro de match dos emails. Nada muito grave, mas deixa a mensagem inconsistente e pode ficar consfuso caso entre no histórico do projeto.
+
+- A mensagem estava excedendo o limite de 75 colunas por linha que os contribuidores exigem na formatação dos commits.
+
+- Na seguda versão do patch que enviamos, esquecemos de indicar `[PATCH v2]` no título e também esquecemos de colocar `Reviewed-by: Marcelo Schmitt <marcelo.schmitt1@gmail.com>`, sendo Marcelo a pessoa que revisou a primeira versão que enviamos.
+
+Para especificar a versão do patch na hora que for enviar o email para os manetenedores, você pode usar a flag `-v`. No nosso caso, após fazer as devidas correções, enviamos um **terceiro patch** d seguinte forma:
+
+```bash
+$ kw mail --send -v3
+```
+
+Essa versão foi **aceita** e esse patch pode ser encontrado [nesse link](https://lore.kernel.org/all/20240429132233.6266-1-lincolnyuji@usp.br/).
+
+## Alguns agradecimentos
+
+Essa foi a minha primeira contribuição para o kernel do Linux e achei uma experiência muito interessante. Gostaria de agradecer ao professor Paulo Meirelles e às integrantes do grupo Luiza Soezima e Sabrina Araújo por terem tornado esse processo de aprendizado possível, além claro dos membros do FLUSP que criaram e disponibilizaram os tutoriais utilizados, compartilhando o conhecimento que eles adquiriram ao longo dos últimos anos.
