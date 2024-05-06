@@ -91,6 +91,82 @@ $ cd tests/
 $ git clone https://github.com/kward/shunit2
 ```
 
+- **Step 7:** Setup inicial de desenvolvimento
+
+Com o **shfmt**, **shellcheck** e **pre-commit** instalados podemos
+rodar o comando `pre-commit install` na raíz do repositório. A partir
+desse ponto, toda vez que você fizer um commit, esses hooks pré commit irão checar se seu commit segue as regras de coding style gerais.
+
+# Fluxo de desenvolvimento
+
+Para qualquer nova mudança você deve seguir os seguintes passos:
+
+- **Step 1:** Sincronizar o seu repositório com o original
+
+Atualize sua branch **unstable local** com a **unstable do upstream**.
+Caso a **unstable do seu fork do kw** não esteja sincronizada com a do upstream, faça isto na interface do GitHub. Após isto, rode no seu repositório local do kw:
+
+```bash
+$ git pull origin unstable
+```
+
+- **Step 2:** Crie uma branch dedicada para a mudança
+
+```bash
+$ git checkout -b <NOME_DA_BRANCH>
+```
+
+- **Step 3:** Execução de testes
+
+Sempre se certifiue de rodar os testes, tanto os antigos quantos os novos que você criou, para garantir que tudo está funcionando como deveria antes de tentar criar o seu commit:
+
+```bash
+$ ./run_tests.sh --unit
+```
+
+Esses testes de unidade podem demorar muito para terminar e, dependendo da mudança, não faz sentido rodar todos os testes para testá-la. Você pode rodar alguns testes de unidade específicos usando:
+
+```bash
+$ ./run_tests.sh test tests/unit/<SCRIPT_DE_TESTE>
+```
+
+- **Step 4:** Atualizar o repositório remoto com as mudanças
+
+Após fazer seus commits e todos eles terem passado pelos checks de
+desenvolvedor. Está na hora de atualizar o seu repositório no Github.
+Para fazer isso, basta rodar:
+
+```bash
+$ git pull --set-upstream origin
+```
+
+Isso irá adicionar a sua nova branch local com as mudanças ao seu repositório remoto.
+
+- **Step 5:** Abrir um pull-request
+
+Após a nova branch se encontrar no Github você pode abrir um PR pela
+própria interface do site. **Certifique que a branch que as branches estão corretas!**
+
+- **Step 6:** Atualizar um pull-request
+
+Com o processo de revisão, você possivelment terá que atualizar o PR.
+Para isto, você deve atualizar os commits necessário com:
+
+```bash
+$ git rebase --interactive unstable
+```
+
+Assinale os commits que deseja editar com `e`.
+
+Após atualizar a branch local, atualize a branch remota com:
+
+```bash
+$ git push --force-with-lease origin <NOME_DA_BRANCH>
+```
+
+Após isso, o pull-request no Github será atualizado automaticamente
+e os mantenedores já podem ver as mudanças que você fez.
+
 # Discussão e ajustes do Pull-Request
 
 Antes do seu PR ser aceito e agregado ao projeto original, algum mantenedor do kw irá averiguar se está tudo certo.
