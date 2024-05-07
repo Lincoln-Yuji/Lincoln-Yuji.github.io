@@ -27,7 +27,8 @@ responsável por capturar e imprimir os autores dos drivers definidos através d
 a implementação antiga dessa função só consegue fazer isso para *single-line statements* dessa macro. Caso os autores
 estejam definidos em *multi-line statements*, nenhum autor será capturado pela função.
 
-As nossas modificações podem ser encontradas nessa página: https://github.com/kworkflow/kworkflow/pull/1100/commits
+As nossas modificações podem ser encontradas nessa página:
+[kworkflow/pull/1100/commits](https://github.com/kworkflow/kworkflow/pull/1100/commits)
 
 # Processo de contribuição para o KW
 
@@ -145,7 +146,7 @@ Isso irá adicionar a sua nova branch local com as mudanças ao seu repositório
 - **Step 5:** Abrir um pull-request
 
 Após a nova branch se encontrar no Github você pode abrir um PR pela
-própria interface do site. **Certifique que a branch que as branches estão corretas!**
+própria interface do site. **Certifique-se de que as branches estão corretas!**
 
 - **Step 6:** Atualizar um pull-request
 
@@ -174,7 +175,7 @@ Coisas como mensagens de commit, organização, legibilidade, etc. Eles possivel
 antes de agregarem a sua contribuição à branch **unstable**.
 
 Os testes do github-actions, discussões e ajustes podem ser vistos na própria [página
-do Pull-Request](https://github.com/kworkflow/kworkflow/pull/1100) do pull-request no github.
+do pull-request](https://github.com/kworkflow/kworkflow/pull/1100) no github.
 
 No momento da escrita desse blog post, ainda estamos trabalhando com essa contribuição, fazendo os ajustes
 necessários e esperando mais feedbacks dos mantenedores para que a nossa contribuição seja aceita.
