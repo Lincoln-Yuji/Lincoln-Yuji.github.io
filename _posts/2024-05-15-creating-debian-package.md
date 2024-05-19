@@ -64,7 +64,7 @@ Having a Debian Testing working in a virtual machine, we start doing some
 preparations. First of all, ensure we have **ssh-server** enabled and running
 in the VM's Debian:
 
-```
+```bash
 $ sudo apt upgrade && sudo apt update
 $ sudo apt install openssh-server
 $ sudo systemctl enable sshd
@@ -73,7 +73,7 @@ $ sudo systemctl enable sshd
 You can check the VM's public IP by running `ip a` in the command line.
 Now we can access the VM through ssh:
 
-```
+```bash
 $ ssh <username>@<VM-public-IP-address>
 ```
 
@@ -81,14 +81,14 @@ Type `yes` in the terminal and press **Enter**.
 
 Now we can start installing some useful development tools to work with the packaging process:
 
-```
+```bash
 $ sudo apt install devscripts debhelper debian-policy git-buildpackage pkg-perl-tools
 ```
 
 You should also install `apt-file` and update your data base so `dh-make-perl` can
 find Debian packages referred by some Perl library:
 
-```
+```bash
 $ sudo apt install apt-file
 $ sudo apt-file update
 ```
@@ -97,7 +97,7 @@ Next it's recommended to condigure your `git` so all the dev tools can properly 
 the correct information when installing any sort of template and make your
 **git log** with commits more meaningful.
 
-```
+```bash
 $ git config --global user.email "you@example.com"
 $ git config --global user.name "Your Name"
 ```
@@ -105,7 +105,7 @@ $ git config --global user.name "Your Name"
 The tool `dh-make-perl` also uses some variables to correctly fill some fields
 inside the `debian/` directory with data when you install the repository:
 
-```
+```bash
 $ export EMAIL=you@example.com
 $ export DEBFULLNAME="Your Name"
 ```
@@ -117,7 +117,7 @@ Finally, if this is the **first time** you are using `cpan`, you must run the fo
 command **before** running `dh-make-perl` so we have all the base configuration ready
 to go.
 
-```
+```bash
 $ cpan
 ```
 
@@ -125,7 +125,7 @@ $ cpan
 
 **Important: check if the library you chose is not a Debian Package already!**
 
-```
+```bash
 $ dh-make-perl locate Hash::Wrap
 == dh-make-perl 0.124 ==
 Parsing Contents files:
@@ -149,7 +149,7 @@ Our next step is to create the first version of our package. This can be done by
 executing the following commands. They will download and install the code from
 the **upstream** and setup some template files inside `debian/`:
 
-```
+```bash
 $ mkdir hash_wrap_pack && cd hash_wrap_pack
 $ dh-make-perl --pkg-perl --cpan Hash::Wrap
 ```
@@ -167,7 +167,7 @@ you need to check three files in `debian/` and see if everything is ok:
 
 Check for the copyrights of the pacages with the following commands:
 
-```
+```bash
 $ grep -i -r --exclude-dir=.git --exclude-dir=debian copyright
 $ licensecheck --shortname-scheme=debian,spdx --copyright --recursive .
 $ scan-copyrights
@@ -198,7 +198,7 @@ you might have to chage this with other packages.
 You can use the following command to check `Standards-Version` and
 `debheper-compat`'s version, respectively:
 
-```
+```bash
 $ dpkg-query --show --showformat '${Version}\n' debian-policy
 $ rmadison --suite=unstable debhelper | cut -d"|" -f 2 | sed 's/\s\+//'
 ```
@@ -214,7 +214,7 @@ The final result of our changes was this:
 
 Check if everything is ok with this file:
 
-```
+```bash
 $ cme check dpkg-control debian/control
 Reading package lists... Done
 Building dependency tree... Done
