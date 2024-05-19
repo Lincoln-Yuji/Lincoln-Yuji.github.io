@@ -60,11 +60,28 @@ installation is enough. Any additional software can be installed after we have
 the system operating and running.
 
 # Configuring a development environment for Debian Packages
-Having a Debian Testing working in a virtual machine, we can start installing some
-useful develpment tools to work with the packaging process:
+Having a Debian Testing working in a virtual machine, we start doing some
+preparations. First of all, ensure we have **ssh-server** enabled and running
+in the VM's Debian:
 
 ```
 $ sudo apt upgrade && sudo apt update
+$ sudo apt install openssh-server
+$ sudo systemctl enable sshd
+```
+
+You can check the VM's public IP by running `ip a` in the command line.
+Now we can access the VM through ssh:
+
+```
+$ ssh <username>@<VM-public-IP-address>
+```
+
+Type `yes` in the terminal and press **Enter**.
+
+Now we can start installing some useful development tools to work with the packaging process:
+
+```
 $ sudo apt install devscripts debhelper debian-policy git-buildpackage pkg-perl-tools
 ```
 
