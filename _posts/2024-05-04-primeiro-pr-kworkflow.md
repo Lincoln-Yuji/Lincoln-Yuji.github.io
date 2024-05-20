@@ -177,7 +177,7 @@ Before your PR is accepted and merged into kw's upstream, some maintainer will
 check if everything is ok. Things like commit messages, organization, readability, etc.
 They probably suggest some changes before merging your contribution to upstream's **unstable**.
 
-The github-actions testes, discussion and changes can found here:
+The github-actions tests, discussion and changes can found here:
 [kworkflow/pull/1100](https://github.com/kworkflow/kworkflow/pull/1100)
 
 At the moment we are working on it, performing the requested changes and waiting for
