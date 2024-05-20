@@ -1,183 +1,186 @@
 ---
-title: Começando a contribuir para o kworkflow
+title: First PR to kworkflow (Part 1)
 categories: [USP, MAC0470]
 tags: [linux, git, kworkflow, bash]
 ---
 
-# O que é o kworkflow?
+# What is kworkflow?
 
-O kworkflow, ou `kw`, é uma ferramenta de linha de comando que está sendo desenvolvida por alunos
-do IME-USP há alguns anos. Ela tem como objetivo facilitar e auxiliar pessoas que estão desenvolvendo
-para o kernel do Linux, ou seja, é uma ferramenta **feita por desenvolvedores para desenvolvedores**.
+Kworfklow, or `kw`, is command line tool under development of some IME-USP students. Its
+goal is to reduce the overhead with infrastructure setup for Linux development, that is,
+it's a tool **made for developers to developers**.
 
-Para mais detalhes, recomendo dar uma olhada no [repositório do projeto](https://github.com/kworkflow/kworkflow).
+For more details, it's recommender to take a look at [kw's repository](https://github.com/kworkflow/kworkflow).
 
-# Primeiro Pull-Request para o kworkflow
+# First Pull-Request to kworkflow
 
-Na disciplina de MAC0470 nós tivemos que fazer algumas contribuições para o Kernel. Não somente isso, mas também tivemos
-que realizar ao menos uma contriuição para o projeto do kw.
+There are some interesting issues to be solved e might be a good option for newcomers. After looking for some
+issues, our group decided to attack the issue [#69](https://github.com/kworkflow/kworkflow/issues/69).
 
-O projeto se encontra no Github e existem algumas issues bem interessantes para serem resolvidas e podem ser boas
-para quem ainda está começando a contribuir ou não entende muito de shell script.
+The details can be found at the issue's thread itself, but basically what we need to do is immprove the function
+responsible for capturing and printing drivers' authors defined through the macro `MODULE_AUTHOR`. However,
+the old implementation of this function only can do that for *single-line* statements of this macro.
+If the authors are defined in *multi-line* statements, then no author is caught by the function.
 
-Após procurar um pouco, o nosso grupo decidiu resolver a issue [#69](https://github.com/kworkflow/kworkflow/issues/69).
-
-Os detalhes podem ser encontrados no link da própria issue, mas basicamente o que precisamos fazer é melhorar a função
-responsável por capturar e imprimir os autores dos drivers definidos através do uso da macro `MODULE_AUTHOR`. No entanto,
-a implementação antiga dessa função só consegue fazer isso para *single-line statements* dessa macro. Caso os autores
-estejam definidos em *multi-line statements*, nenhum autor será capturado pela função.
-
-As nossas modificações podem ser encontradas nessa página:
+Our modifications can be found in this page:
 [kworkflow/pull/1100/commits](https://github.com/kworkflow/kworkflow/pull/1100/commits)
 
-# Processo de contribuição para o KW
+# Contribution process for KW
 
-Esse é um explicação bem breve do processo. Para mais detalhes, por favor
-acesse [esse link](https://kworkflow.org/content/howtocontribute.html#development-cycle-and-branches) da documentação.
+This blog post is a short explanation of the process. For more details, check
+[this link](https://kworkflow.org/content/howtocontribute.html#development-cycle-and-branches)
+from the documentation.
 
-- **Step 1:** Crie um fork pessoal do kw
+- **Step 1:** Create a KW's fork
 
-Para realizar essa etapa, acesse a página do *upstream* e clique no botão `Fork` no topo da página.
+Access the *upstream* page and press the `Fork` button at the top of the page.
 
-Note que o seu fork do kw não é sincronizado automaticamente com o *upstream*
-quando há atualizações na **unstable**. Para isso, no seu fork, selecione **unstable**
-e clique em `Sync fork`.
+Note that your fork is now automatically synchronized with upstream when something
+is updated in **unstable**. Because of the, it's recommended to frequentely, in your
+fork, select **unstable** and then click `Sync Fork`.
 
-- **Step 2:** Clone o seu repositório do kw na sua máquina
+- **Step 2:** Clone your fork to your local machine
 
-Para evitar dor de cabeça com permissões do Github toda vez que precisar
-subir uma mudança para o seu fork remoto, clone através do SSH:
+To avoid trouble with any permissions from Github everytime you try
+to perform a `git push`, clone your repo using SSH:
 
 ```bash
-$ git clone git@github.com:<nome-de-usuario>/kworkflow.git
+$ git clone git@github.com:<username>/kworkflow.git
 ```
 
-Caso você não tenha o SSH da sua máquina associada ao seu perfil,
-você deverá ter que configurar isso pela própria interface do Github.
+If you don't have your machine's SSH key associated to your Github
+profile, then you can configure this through Github's interface.
 
-- **Step 3:** Mude para a branch **unstable** localmente
-
-Lembre que todas as mudanças são feitas na **unstable**. Para trocar de branch, execute:
+- **Step 3:** Switch to branch **unstable** locally
 
 ```bash
 $ git switch unstable
 ```
 
-Caso não funcione, rode:
+If it doesn't work, try this:
 
 ```bash
 $ git checkout --track origin/unstable
 ```
 
-- **Step 4:** Instale o kw
+- **Step 4:** Install kworkflow
 
-Na raíz do diretório do projeto, rode: `./setup.sh --install`. Se quiser instalar o kw sem as *man pages* (o que é muito mais rápido) rode: `./setup.sh --install --skip-docs`.
+In the repository's root, run `./setup.sh --install`. If you want to install kw with no *man pages*
+(which is a lot faster by the way), you can run: `./setup.sh --install --skip-docs`.
 
-- **Step 5:** Instale as dependências de desenvolvedor
+- **Step 5:** Install developer's dependencies
 
-Existem 3 ferramentas que você precisa ter instaladas para conseguir contribuir para o kw: o **shfmt** como formatter, o **shellcheck** como linter e o **pre-commit** para criar os hooks de pré commits.
+There are 3 tools that you need to have installed to be able to contribute to kw: **shfmt** as code
+formatter, **shellcheck** as linter and **pre-commit** to create the pre-commit hooks.
 
-No caso do **Ubuntu**, essas três ferramentas podem ser instaladas usando o `apt`:
+In **Ubuntu**, these tools can be installes via `apt`:
 
 ```bash
 $ sudo apt install shfmt shellcheck pre-commit
 ```
 
-- **Step 6:** Instale o shUnit2
+- **Step 6:** Install shUnit2
 
-Esse é um framework de testes de unidade que o kw utiliza. Você pode simplesmente rodar:
+This is test framework used by the kw's maintainers. You can simply execute:
 
 ```bash
 $ cd tests/
 $ git clone https://github.com/kward/shunit2
 ```
 
-- **Step 7:** Setup inicial de desenvolvimento
+- **Step 7:** Initial development setup
 
-Com o **shfmt**, **shellcheck** e **pre-commit** instalados podemos
-rodar o comando `pre-commit install` na raíz do repositório. A partir
-desse ponto, toda vez que você fizer um commit, esses hooks pré commit irão checar se seu commit segue as regras de coding style gerais.
+We can now run `pre-commit install` in kw's root. From now on, every time
+you call `git commit`, these commits will check if your changes follow codestyle
+rules defined by our development tools.
 
-# Fluxo de desenvolvimento
+# Overall Workflow
 
-Para qualquer nova mudança você deve seguir os seguintes passos:
+Every time you wish to start making new changes, you must follow these steps:
 
-- **Step 1:** Sincronizar o seu repositório com o original
+- **Step 1:** Synchronize your fork and local clone
 
-Atualize sua branch **unstable local** com a **unstable do upstream**.
-Caso a **unstable do seu fork do kw** não esteja sincronizada com a do upstream, faça isto na interface do GitHub. Após isto, rode no seu repositório local do kw:
+Sync your fork with kw's **upstream** via Github's iterface. Then, pull all the changes to
+your local clone:
 
 ```bash
 $ git pull origin unstable
 ```
 
-- **Step 2:** Crie uma branch dedicada para a mudança
+- **Step 2:** Create a new branch for your changes
 
 ```bash
-$ git checkout -b <NOME_DA_BRANCH>
+$ git checkout -b <branch-name>
 ```
 
-- **Step 3:** Execução de testes
+After this, you can start making changes to kw's source code.
 
-Sempre se certifiue de rodar os testes, tanto os antigos quantos os novos que você criou, para garantir que tudo está funcionando como deveria antes de tentar criar o seu commit:
+- **Step 3:** Execute kw's tests
+
+After you've made some changes, check kw's tests to see if you didn't break anything. If
+your changes need to be covered by new tests, then create new tests as well and execute them.
 
 ```bash
 $ ./run_tests.sh --unit
 ```
 
-Esses testes de unidade podem demorar muito para terminar e, dependendo da mudança, não faz sentido rodar todos os testes para testá-la. Você pode rodar alguns testes de unidade específicos usando:
+The previous command runs all the kw's unit tests. This might take some time and, sometimes,
+it doesn't make sense to run all unit tests when our changes have a very limited scope.
+
+You can run single unit tests by running:
 
 ```bash
-$ ./run_tests.sh test tests/unit/<SCRIPT_DE_TESTE>
+$ ./run_tests.sh test tests/unit/<script-name>
 ```
 
-- **Step 4:** Atualizar o repositório remoto com as mudanças
+- **Step 4:** Update your remote fork
 
-Após fazer seus commits e todos eles terem passado pelos checks de
-desenvolvedor. Está na hora de atualizar o seu repositório no Github.
-Para fazer isso, basta rodar:
+After commiting your new changes, you must update your remote fork:
 
 ```bash
-$ git pull --set-upstream origin
+$ git push --set-upstream origin <branch-name>
 ```
 
-Isso irá adicionar a sua nova branch local com as mudanças ao seu repositório remoto.
+This will add your new branch to your remote fork, carrying all the changes you've
+made.
 
-- **Step 5:** Abrir um pull-request
+- **Step 5:** Open Pull-Request
 
-Após a nova branch se encontrar no Github você pode abrir um PR pela
-própria interface do site. **Certifique-se de que as branches estão corretas!**
+Once the new branch is in your remote fork, you can use Github's interface
+to open a pull request to kw's upstream.
 
-- **Step 6:** Atualizar um pull-request
+**Check if the base branch and target branch re correct!** You must
+pull request to `kworkflow:unstable`.
 
-Com o processo de revisão, você possivelment terá que atualizar o PR.
-Para isto, você deve atualizar os commits necessário com:
+- **Step 6:** Update Pull-Request 
+
+After getting your pull request reviwed, you'll probably have
+to update it. To do so, you need to update your last`n-commits`:
 
 ```bash
-$ git rebase --interactive unstable
+$ git rebase --interactive HEAD~<n-commits>
 ```
 
-Assinale os commits que deseja editar com `e`.
-
-Após atualizar a branch local, atualize a branch remota com:
+After updating your local branch, update your remote one with:
 
 ```bash
-$ git push --force-with-lease origin <NOME_DA_BRANCH>
+$ git push --force-with-lease origin <branch-name>
 ```
 
-Após isso, o pull-request no Github será atualizado automaticamente
-e os mantenedores já podem ver as mudanças que você fez.
+After that, the pull request on Github will be automatically
+updated and kw's maintainers will already be able to see the
+changes you've made.
 
-# Discussão e ajustes do Pull-Request
+# Pull-Request's discussion and adjustments
 
-Antes do seu PR ser aceito e agregado ao projeto original, algum mantenedor do kw irá averiguar se está tudo certo.
-Coisas como mensagens de commit, organização, legibilidade, etc. Eles possivelmente irão sugerir mudanças
-antes de agregarem a sua contribuição à branch **unstable**.
+Before your PR is accepted and merged into kw's upstream, some maintainer will
+check if everything is ok. Things like commit messages, organization, readability, etc.
+They probably suggest some changes before merging your contribution to upstream's **unstable**.
 
-Os testes do github-actions, discussões e ajustes podem ser vistos na própria [página
-do pull-request](https://github.com/kworkflow/kworkflow/pull/1100) no github.
+The github-actions testes, discussion and changes can found here:
+[kworkflow/pull/1100](https://github.com/kworkflow/kworkflow/pull/1100)
 
-No momento da escrita desse blog post, ainda estamos trabalhando com essa contribuição, fazendo os ajustes
-necessários e esperando mais feedbacks dos mantenedores para que a nossa contribuição seja aceita.
+At the moment we are working on it, performing the requested changes and waiting for
+more feedback from maintainers to have our first contribution accepted.
 
-Farei um novo blog post relatando futuras atualizações assim que possível.
+There will be a new blog post telling future updates as soon as possible.
