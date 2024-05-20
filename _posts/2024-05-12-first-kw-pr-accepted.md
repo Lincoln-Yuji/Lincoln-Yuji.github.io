@@ -1,5 +1,5 @@
 ---
-title: First accepted PR for kworkflow
+title: First PR to kworkflow (Part 2)
 categories: [USP, MAC0470]
 tags: [linux, git, kworkflow, bash]
 ---
