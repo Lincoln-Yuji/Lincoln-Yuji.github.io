@@ -225,3 +225,84 @@ If no further changes are needed you can just commit this file and proceed
 to the following steps.
 
 ### debian/changelog
+
+Before changing this file, we should check if our package so far is
+correctly set up. To do so, we can just build it and run `litian` to
+check if everything is ok:
+
+```bash
+$ sudo pbuilder create
+$ sudo pbuilder update
+```
+
+This will build the package and ensure it's updated. Now, with a new version
+built of the package, we should ensure we have all the dependencies installed
+by running:
+
+```bash
+$ BUILDER=pbuilder git-pbuilder
+```
+
+Finally, we check if our packages is fine by using lintian:
+
+```bash
+$ lintian -I --profile pkg-perl --info
+```
+
+In particular, with this package, we get a warning which says: `initial-upload-closes-no-bugs`.
+This is something we will fix by opening an **ITP** report and updating our
+changelog file.
+
+Now we can run some development tests and check if our packages successfully
+passes them all:
+
+```bash
+$ sudo apt-get install ubuntu-dev-tools # Contains dev tests
+$ sudo adduser <username> sbuild        # Allows you to run without root
+$ mk-sbuild sid                         # Creates a chroot i.e. sid-amd64
+$ autopkgtest . -- schroot sid-amd64    # Builds and tests with the chroot created
+```
+
+After that, you should check the last lines and see something like:
+
+```
+All tests successful.
+...
+autodep8-perl-recommends PASS (superficial)
+```
+
+That means our package is fine and we can upload it. But, before that,
+remembe we have to open an **ITP** report and update our changelog.
+
+To do so, we need to send an email to `submit@bugs.debian.org`.
+The subject and content of the email can be extracted by running:
+
+```bash
+$ dpt gen-itp > /tmp/mail
+$ cat /tmp/mail 
+```
+
+Use any email client to send it. After some minutes, you will receive a response
+like so:
+
+![ITP bug report](/assets/img/debian_package_tutorial/debian_itp_bug_code_mail.png)
+
+The bug report was created. This one in particular can be accessed through
+[this link](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071516).
+
+With this task done, we can update our `debian/changelog` file:
+
+```bash
+$ dch --closes 1071516 # Updates changelog message to close this bug
+$ dch --release        # Switch 'unreleased' to 'unstable' status
+```
+
+This was the result:
+
+![debian/changelog](/assets/img/debian_package_tutorial/itp_updated_changelog.png)
+
+Commit those changes and we can proceed to the next steps.
+
+# Uploading the package to Debian Perl's team repository
+
+WORK IN PROGRESS...
