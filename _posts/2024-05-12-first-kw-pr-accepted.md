@@ -109,3 +109,6 @@ this link:
 We had our changes accepted and merged into kw's upstream. They first get
 merged into **unstable** and then the maintainers will periodically merge
 it into **master**.
+
+Our contribution can be found here:
+[commit/328449c949d5a7e71baa4bdec4ca326ebcbc77c1](https://github.com/kworkflow/kworkflow/commit/328449c949d5a7e71baa4bdec4ca326ebcbc77c1)
