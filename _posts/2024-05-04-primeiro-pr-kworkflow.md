@@ -31,7 +31,7 @@ This blog post is a short explanation of the process. For more details, check
 [this link](https://kworkflow.org/content/howtocontribute.html#development-cycle-and-branches)
 from the documentation.
 
-- **Step 1:** Create a KW's fork
+### Step 1: Create a KW's fork
 
 Access the *upstream* page and press the `Fork` button at the top of the page.
 
@@ -39,7 +39,7 @@ Note that your fork is now automatically synchronized with upstream when somethi
 is updated in **unstable**. Because of the, it's recommended to frequentely, in your
 fork, select **unstable** and then click `Sync Fork`.
 
-- **Step 2:** Clone your fork to your local machine
+### Step 2: Clone your fork to your local machine
 
 To avoid trouble with any permissions from Github everytime you try
 to perform a `git push`, clone your repo using SSH:
@@ -51,7 +51,7 @@ $ git clone git@github.com:<username>/kworkflow.git
 If you don't have your machine's SSH key associated to your Github
 profile, then you can configure this through Github's interface.
 
-- **Step 3:** Switch to branch **unstable** locally
+### Step 3: Switch to branch **unstable** locally
 
 ```bash
 $ git switch unstable
@@ -63,12 +63,12 @@ If it doesn't work, try this:
 $ git checkout --track origin/unstable
 ```
 
-- **Step 4:** Install kworkflow
+### Step 4: Install kworkflow
 
 In the repository's root, run `./setup.sh --install`. If you want to install kw with no *man pages*
 (which is a lot faster by the way), you can run: `./setup.sh --install --skip-docs`.
 
-- **Step 5:** Install developer's dependencies
+### Step 5: Install developer's dependencies
 
 There are 3 tools that you need to have installed to be able to contribute to kw: **shfmt** as code
 formatter, **shellcheck** as linter and **pre-commit** to create the pre-commit hooks.
@@ -79,7 +79,7 @@ In **Ubuntu**, these tools can be installes via `apt`:
 $ sudo apt install shfmt shellcheck pre-commit
 ```
 
-- **Step 6:** Install shUnit2
+### Step 6: Install shUnit2
 
 This is test framework used by the kw's maintainers. You can simply execute:
 
@@ -88,7 +88,7 @@ $ cd tests/
 $ git clone https://github.com/kward/shunit2
 ```
 
-- **Step 7:** Initial development setup
+### Step 7: Initial development setup
 
 We can now run `pre-commit install` in kw's root. From now on, every time
 you call `git commit`, these commits will check if your changes follow codestyle
@@ -98,7 +98,7 @@ rules defined by our development tools.
 
 Every time you wish to start making new changes, you must follow these steps:
 
-- **Step 1:** Synchronize your fork and local clone
+### Step 1: Synchronize your fork and local clone
 
 Sync your fork with kw's **upstream** via Github's iterface. Then, pull all the changes to
 your local clone:
@@ -107,7 +107,7 @@ your local clone:
 $ git pull origin unstable
 ```
 
-- **Step 2:** Create a new branch for your changes
+### Step 2: Create a new branch for your changes
 
 ```bash
 $ git checkout -b <branch-name>
@@ -115,7 +115,7 @@ $ git checkout -b <branch-name>
 
 After this, you can start making changes to kw's source code.
 
-- **Step 3:** Execute kw's tests
+### Step 3: Execute kw's tests
 
 After you've made some changes, check kw's tests to see if you didn't break anything. If
 your changes need to be covered by new tests, then create new tests as well and execute them.
@@ -133,7 +133,7 @@ You can run single unit tests by running:
 $ ./run_tests.sh test tests/unit/<script-name>
 ```
 
-- **Step 4:** Update your remote fork
+### Step 4: Update your remote fork
 
 After commiting your new changes, you must update your remote fork:
 
@@ -144,7 +144,7 @@ $ git push --set-upstream origin <branch-name>
 This will add your new branch to your remote fork, carrying all the changes you've
 made.
 
-- **Step 5:** Open Pull-Request
+### Step 5: Open Pull-Request
 
 Once the new branch is in your remote fork, you can use Github's interface
 to open a pull request to kw's upstream.
@@ -152,7 +152,7 @@ to open a pull request to kw's upstream.
 **Check if the base branch and target branch re correct!** You must
 pull request to `kworkflow:unstable`.
 
-- **Step 6:** Update Pull-Request 
+### Step 6: Update Pull-Request 
 
 After getting your pull request reviwed, you'll probably have
 to update it. To do so, you need to update your last`n-commits`:
