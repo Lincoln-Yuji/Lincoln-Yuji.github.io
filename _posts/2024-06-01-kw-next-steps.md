@@ -1,5 +1,5 @@
 ---
-title: '(Contributions to FOSS) Next steps with KW'
+title: 'FOSS contributions - Next steps with KW'
 categories: [USP, MAC0470]
 tags: [linux, kworkflow]
 ---
