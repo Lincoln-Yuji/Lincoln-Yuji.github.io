@@ -42,6 +42,29 @@ specifically.
 So the idea is to find the driver your machine's touchpad uses. And you can do that
 following a few steps.
 
+You can find the hardware bus channel used by your touchpad using the following command:
+
+```sh
+grep -iA2 touchpad /proc/bus/input/devices
+```
+
+In my case, I can clearly see that the `i2c` channel is the one. We can check the loaded
+modules using it by running:
+
+```sh
+sudo lsmod | grep i2c
+```
+
+My VAIO laptop uses the `i2c_hid` driver. More precisely the `i2c_hid_acpi` to work
+with the Linux Kernel.
+
+Everytime the `i2c_hid_acpi` moudules fails, my touchpad dies. It can happen either
+on boot or suspend/wake. When that happens, we can check the kernel's log running:
+
+```sh
+sudo dmesg | grep i2c_hid_acpi
+```
+
 **[ WORKING IN PROGRESS ]**
 
 # Solution for Linux distros using Systemd
