@@ -65,9 +65,17 @@ on boot or suspend/wake. When that happens, we can check the kernel's log runnin
 sudo dmesg | grep i2c_hid_acpi
 ```
 
-**[ WORKING IN PROGRESS ]**
+When you have your touchpad working just fine, you can confirm the driver is used
+by your touchpad's hardware by running `sudo rmmod i2c_hid_acpi`. In this case, you
+should replace **i2c_hid_acpi** with the module your laptop is using.
 
-# Solution for Linux distros using Systemd
+If your touchpad stops working after running this command, then you found the exact
+driver, otherwise you need to keep looking for the correct one.
+
+To load back the module we've just removed we can just run `sudo modprobe i2c_hid_acpi`
+and then have our touchpad working once again.
+
+# Permanent (janky) solution for Linux distros using Systemd
 
 In my case, distros I usually use have Systemd as their base system's service
 manager. The idea is to take advantage of this creating a script that will be
@@ -95,10 +103,13 @@ TOUCHPAD_DRIVER='i2c_hid_acpi'
 
 if [ "$1" = "pre" ]; then
     modprobe -r "$TOUCHPAD_DRIVER"
-    echo "[REMOVE] Removing ${TOUCHPAD_DRIVER} driver." >> "$LOG_FILE"
+    echo "[STATUS] modprobe returned $?" >> "$LOG_FILE"
+    echo "[REMOVE] ${TOUCHPAD_DRIVER} driver | $(date)" >> "$LOG_FILE"
 elif [ "$1" = "post" ]; then
+    sleep 2
     modprobe "$TOUCHPAD_DRIVER"
-    echo "[LOAD] Loading ${TOUCHPAD_DRIVER} driver." >> "$LOG_FILE"
+    echo "[STATUS] modprobe returned $?" >> "$LOG_FILE"
+    echo "[ADDING] ${TOUCHPAD_DRIVER} driver | $(date)" >> "$LOG_FILE"
 fi
 ```
 
@@ -119,5 +130,24 @@ will patch these problems in future driver updates.
 
 Since this is a kernel level bug, most users (even advanced ones) will
 have to do some kind of workaround to have their hardware working properly.
+
+# Booting using Legacy rather than UEFI
+
+Most of machines nowadays have the UEFI boot mode enabled by default, and that
+happens they come with Windows installed from factory. Some of them might not
+even have the option to change the boot to Legacy mode.
+
+However, if you have intentions to install Linux into your machine and have
+the option use Legacy, I strongly recommend you to do so. The UEFI mode is
+a tool developed to make it difficult for the average user to uninstall their
+Operating System and nuke their computer. On top of that, most machines have
+also Secure Boot enabled as an extra layer of protection.
+
+In fact, UEFI was originally made to avoid users trying to install different
+Operating Systems into their machines, including Linux, and lock them into
+using Windows by default.
+
+You maybe will not face this sort of issue when using Legacy boot, but it's
+not guaranteed and also you may not have this option in your BIOS configuration.
 
 Hopefuly this information is useful and good luck with your Troubleshooting!
