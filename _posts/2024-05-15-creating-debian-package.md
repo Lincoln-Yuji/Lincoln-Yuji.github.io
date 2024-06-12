@@ -28,7 +28,7 @@ such as Ubuntu or Linux Mint are largely used in commercial fields and
 backend servers. Debian plays a huge role in our lives nowadays and
 multiple systems are built on top of a Debian "core".
 
-Regarding how we can contribute, if you have any software the you would
+Regarding how we can contribute, if you have any software that you would
 like to make it more easily accessible to other people then this is
 already a good start. How you create and publish this package to be
 downloadable by `apt` is something that we should take a better look at.
@@ -41,7 +41,7 @@ In particular, we'll be using these great tutorials made by **Joenio Marques da 
 
 I'll try to focus more on my experience while doing these tutorial and
 lessons I learned. But of course, I'll be showing the steps I followed as well and
-do my best to explain how I aproached these tutorials.
+do my best to explain how I followed these tutorials.
 
 # Installing Debian Testing
 
@@ -60,7 +60,7 @@ installation is enough. Any additional software can be installed after we have
 the system operating and running.
 
 # Configuring a development environment for Debian Packages
-Having a Debian Testing working in a virtual machine, we start doing some
+Having Debian Testing working in a virtual machine, we start doing some
 preparations. First of all, ensure we have **ssh-server** enabled and running
 in the VM's Debian:
 
@@ -93,9 +93,9 @@ $ sudo apt install apt-file
 $ sudo apt-file update
 ```
 
-Next it's recommended to condigure your `git` so all the dev tools can properly set
+Next it's recommended to configure your `git` so all the dev tools can properly set
 the correct information when installing any sort of template and make your
-**git log** with commits more meaningful.
+**git log** information more meaningful.
 
 ```bash
 $ git config --global user.email "you@example.com"
@@ -135,14 +135,14 @@ Hash::Wrap is not found in any Debian package
 ```
 
 This is where we start diverging from the tutorial. Of course we don't want to use
-the Hello World library beacuse it does not provide ny real utility apart from
+the Hello World library because it does not provide ny real utility apart from
 learning how packages are structured in Debian.
 
 And, again, it's important to choose a library that is not a Debian package yet.
 At the time this blog post is published, this lirary will already be in a Debian
 package probably and the reader will have to choose another library to work with.
 
-Howerver, keep in mind that you can use any library of your interest to create
+However, keep in mind that you can use any library of your interest to create
 packages for Debian. Don't feel limited by the few option the tutorial shows you.
 
 Our next step is to create the first version of our package. This can be done by
@@ -191,7 +191,7 @@ At the moment this blog was in production, the policy we should use for
 `Standards-Version` inside `control` is **4.7.0** and the version
 `debhelper-compat` is **13**.
 
-However, those changes were not necessary beacuse the base configuration
+However, those changes were not necessary because the base configuration
 we received from `dh-make-perl` didn't mess this up, but keep in mind that
 you might have to chage this with other packages.
 
@@ -203,7 +203,7 @@ $ dpkg-query --show --showformat '${Version}\n' debian-policy
 $ rmadison --suite=unstable debhelper | cut -d"|" -f 2 | sed 's/\s\+//'
 ```
 
-Often you will need to update the **Description** beacuse `dh-make-perl`
+Often you will need to update the **Description** because `dh-make-perl`
 uses the description from the upstream to write it onto the file. However,
 this description is usually not good enough to keep in this file. It's
 bery likely will have to change it to something more meaningful.
@@ -272,7 +272,7 @@ autodep8-perl-recommends PASS (superficial)
 ```
 
 That means our package is fine and we can upload it. But, before that,
-remembe we have to open an **ITP** report and update our changelog.
+remember that we have to open an **ITP** report and update our changelog.
 
 To do so, we need to send an email to `submit@bugs.debian.org`.
 The subject and content of the email can be extracted by running:
