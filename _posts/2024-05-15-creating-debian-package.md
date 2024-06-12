@@ -246,11 +246,19 @@ to the following steps.
 
 Before changing this file, we should check if our package so far is
 correctly set up. To do so, we can just build it and run `litian` to
-check if everything is ok:
+check if everything is ok.
+
+However, an issue that I had was that, for some reason, some `env`
+*PERL* variables were messed up and package installation paths were
+pointing to directories inside the user's `/home`, which is NOT
+allowed by Debian packages at all.
+
+To solve that, I had to run the following commands using `env -i` to
+start a clean environment.
 
 ```bash
-$ sudo pbuilder create
-$ sudo pbuilder update
+$ env -i sudo pbuilder create
+$ env -i sudo pbuilder update
 ```
 
 This will build the package and ensure it's updated. Now, with a new version
@@ -258,7 +266,7 @@ built of the package, we should ensure we have all the dependencies installed
 by running:
 
 ```bash
-$ BUILDER=pbuilder git-pbuilder
+$ env -i BUILDER=pbuilder git-pbuilder
 ```
 
 Finally, we check if our packages is fine by using lintian:
