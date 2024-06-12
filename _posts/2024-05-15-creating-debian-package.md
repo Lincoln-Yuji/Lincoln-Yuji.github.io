@@ -52,32 +52,50 @@ a nice balance between **Unstable** and **Stable**. The installer can be found
 We don't need ay sort of insane setup to start working with packaging software for Debian.
 We can simply use a virtual machine to install and run the operating system.
 
-I decided to use [virt manager](https://virt-manager.org/) to install Debian Testing
-and start working on this task.
+I decided to use `libvirt` via [virt manager](https://virt-manager.org/) to install
+Debian Testing and start working on this task.
 
 We also don't need an installation with too much stuff. A very basic and raw Debian
 installation is enough. Any additional software can be installed after we have
 the system operating and running.
 
 # Configuring a development environment for Debian Packages
+
+First of all, we should be able to access our Debian VM. We can do that by opening
+the Virtual Machine via `virt manager`, but I would rather work on this from the
+Host Machine via SSH.
+
 Having Debian Testing working in a virtual machine, we start doing some
 preparations. First of all, ensure we have **ssh-server** enabled and running
 in the VM's Debian:
 
 ```bash
+# @vm
 $ sudo apt upgrade && sudo apt update
 $ sudo apt install openssh-server
 $ sudo systemctl enable sshd
 ```
 
 You can check the VM's public IP by running `ip a` in the command line.
+
+Alternatively, with the Debian VM running, check its IP by using the following commands
+in the Host Machine's command line:
+
+```sh
+# @host
+$ virsh net-list  # This command will prompt the used network name
+$ virsh net-dhcp-leases <network-name>
+```
+
 Now we can access the VM through ssh:
 
 ```bash
+# @host
 $ ssh <username>@<VM-public-IP-address>
 ```
 
-Type `yes` in the terminal and press **Enter**.
+Enter your password, type `yes` in the terminal and press **Enter**. From now
+on, every command will be executed inside the `@vm`.
 
 Now we can start installing some useful development tools to work with the packaging process:
 
@@ -303,6 +321,48 @@ This was the result:
 
 Commit those changes and we can proceed to the next steps.
 
+# Preparations to upload the package
+
+We need to create a Salsa account first. A moderator will check if everything is ok
+and then accept your registration into Salsa. Keep in mind that this can take some hours
+or even days.
+
+After getting your account accepted, you need to **associate an SSH key to your profile in Salsa Gitlab**.
+
+Note that this SSH key needs to be an SSH key configured inside the machine we are working with
+the package, that is, inside the Virtual Machine.
+
+These are the steps I did to set up an SSH key in the Debian VM and associate to my Salsa profile.
+
+Generate the SSH key using the `ed25519` algorithm:
+
+```sh
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+Then start the `ssh-agent` in the background:
+
+```sh
+eval "$(ssh-agent -s)"
+```
+
+Add your private key to the agent:
+
+```sh
+ssh-add ~/.ssh/id_ed25519
+```
+
+Now you can just copy and paste the content from `cat ~/.ssh/id_ed25519.pub` into Salsa Gitlab
+when associating a new SSH key to your profile. Note that you do this with your public key, not
+the private one.
+
+After all this we can upload packages to Salsa Gitlab with no headaches or additional authentications.
+
 # Uploading the package to Debian Perl's team repository
 
-WORK IN PROGRESS...
+First of all, we need to join the Perl's Team. We can do that by sending them an
+email with a small intorduction and our Salsa username. The email I've sent can
+be found here:
+https://lists.debian.org/debian-perl/2024/06/msg00000.html
+
+**WORK IN PROGRESS...**
