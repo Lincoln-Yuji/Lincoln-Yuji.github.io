@@ -38,6 +38,12 @@ Siqueira and possible additional changes we can make with test script,
 since it's a very old file that hasn't been properly maintained for a
 long time.
 
+### [Update] This contribution was accepted
+
+This contribution was accepted and the commit in the upstream project can
+be found here:
+[defa94039155](https://github.com/kworkflow/kworkflow/commit/defa940391552e93eec6aab02f480111ced941a9)
+
 # Handling trailer lines with kw
 
 Both [#1049](https://github.com/kworkflow/kworkflow/issues/1049) and
