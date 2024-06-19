@@ -13,6 +13,13 @@ However, I've finally found a solution to this! I'll be sharing it here and give
 some tips for people with possibly similar issues. Because some few details will
 depend on your hardware's manufactor.
 
+One REALLY good source I used to gather a lot of the following information was from
+this thread of the
+[Manjaro forum](https://forum.manjaro.org/t/syna3602-touchpad-not-working-at-all/3108/11?page=2),
+which is exactly my issue AND touchpad model.
+
+Indicating that this is an issue at **kernel and hardware-level**.
+
 # Base idea of the solution
 
 This is an issue whose solution I've been searching for a few months. I found
