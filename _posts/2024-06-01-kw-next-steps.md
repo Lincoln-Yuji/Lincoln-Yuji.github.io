@@ -58,6 +58,13 @@ an already existing kw's feature.
 We have decided to go with the first idea and have open this pull-request:
 [kworkflow/pull/1121](https://github.com/kworkflow/kworkflow/pull/1121).
 
+I'm still unsure about this name though. Some ideas I heard from friends are:
+
+- `kw annotate`
+- `kw amend`
+- `kw tag`
+- `kw signature`
+
 It's still too early to tell if this PR will be accepted or not at the moment.
 I'll be making a new blog post telling how this feature development is going on
-and if should be optimistc about it getting accepted or not.
+and if we should be optimistc about it getting accepted or not.
