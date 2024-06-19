@@ -75,6 +75,19 @@ driver, otherwise you need to keep looking for the correct one.
 To load back the module we've just removed we can just run `sudo modprobe i2c_hid_acpi`
 and then have our touchpad working once again.
 
+Additionaly, you can check your **tocuhpad model** running the following command:
+
+```sh
+ls /sys/bus/i2c/devices
+```
+
+This will prompt the loaded devices using the `i2c` bus channel. Apart from the
+multiple `i2c-<index>` you will find something like `i2c-SYNA3602:00` as well.
+
+In my case, this is the factory model of my hardware's touchpad. And you will that
+this will match the model you found when the command
+`grep -iA2 touchpad /proc/bus/input/devices` was used earlier.
+
 # Permanent (janky) solution for Linux distros using Systemd
 
 In my case, distros I usually use have Systemd as their base system's service
@@ -96,19 +109,28 @@ log message in a `/tmp` file for debugging purposes.
 **It's important that you change TOUCHPAD_DRIVER with the name of whatever driver your hardware is using!**
 
 ```sh
-#!/bin/sh
+#!/bin/env bash
 
 LOG_FILE='/tmp/systemd-suspend-touchpad'
 TOUCHPAD_DRIVER='i2c_hid_acpi'
+TOUCHPAD_MODEL='SYNA3602:00'
 
-if [ "$1" = "pre" ]; then
+if [[ "$1" == "pre" ]]; then
     modprobe -r "$TOUCHPAD_DRIVER"
     echo "[STATUS] modprobe returned $?" >> "$LOG_FILE"
     echo "[REMOVE] ${TOUCHPAD_DRIVER} driver | $(date)" >> "$LOG_FILE"
-elif [ "$1" = "post" ]; then
-    sleep 2
+elif [[ "$1" == "post" ]]; then
+    sleep 1
     modprobe "$TOUCHPAD_DRIVER"
     echo "[STATUS] modprobe returned $?" >> "$LOG_FILE"
+    while true; do
+        grep --quiet "$TOUCHPAD_MODEL" /proc/bus/input/devices
+        if [[ "$?" -gt 0 ]]; then
+	        modprobe -r "$TOUCHPAD_DRIVER" && modprobe "$TOUCHPAD_DRIVER"
+	    else
+	        break
+        fi
+    done
     echo "[ADDING] ${TOUCHPAD_DRIVER} driver | $(date)" >> "$LOG_FILE"
 fi
 ```
