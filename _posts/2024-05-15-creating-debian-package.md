@@ -366,11 +366,18 @@ the private one.
 
 After all this we can upload packages to Salsa Gitlab with no headaches or additional authentications.
 
-# Uploading the package to Debian Perl's team repository
+# Uploading the package to Debian Perl's team repository (Not finished)
 
 First of all, we need to join the Perl's Team. We can do that by sending them an
-email with a small intorduction and our Salsa username. The email I've sent can
+email with a small introduction and our Salsa username. The email I've sent can
 be found here:
-https://lists.debian.org/debian-perl/2024/06/msg00000.html
+[2024/06/msg00000](https://lists.debian.org/debian-perl/2024/06/msg00000.html)
 
-**WORK IN PROGRESS...**
+However we had problems trying to contact the Perl's Team and they did not answer any of our
+emails from our MAC0470 group.
+
+I have uploaded our progress with this package on Salsa Gitlab:
+[Hash Wrap on Salsa](https://salsa.debian.org/lincolnyuji/hash-wrap-package)
+
+We will be contacting Joenio, the same person who wrote the used tutorials, to
+finish the job and upload the package to the Perl's Team.
