@@ -46,13 +46,22 @@ few months than the previous 4 years combined.
 
 It was great overall and, as much as I dislike bash, it was a nice experience to have.
 
-# Packaging for Debian
+# Packaging for Debian Linux
 
 This experience was also interesting. I had no idea how HARD actually is
-to package software to a linux distribution. 
+to package software to a linux distribution. And also, we need to be reminded
+that people maintaining packages for Debian are doing that out of pure volutarism,
+which makes it even more impressive in my opinion.
 
-**WORK IN PROGRESS...**
+Unfortunetly we couldn't complete the tutorial to its very end since the Perl Team
+did not respond any of our emails. But we still managed to build and create the `.dev`
+package, which was enough to exerience the whole process of packaging a Perl library
+to the Debian's ecossystem.
 
 # Conclusion
 
-**WORK IN PROGRESS...**
+It was an overall great experience. There were moments of frustration and confusion,
+but we managed to go through every obstacle thanks to classmates' support and determination
+to look up solutions for every issue we eventually had. I've learned a lot about `git` and
+`bash` during this last months and I feel my knowledge about `FOSS` and `Linux` in general
+was significantly improved.
