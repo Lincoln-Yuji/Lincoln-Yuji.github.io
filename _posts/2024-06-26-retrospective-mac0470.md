@@ -44,7 +44,8 @@ you fully understand why `git` actually exists and forces you to learn and keep 
 of potential conflicting changes. I'm sure that I did more **rebases** in the last
 few months than the previous 4 years combined.
 
-It was great overall and, as much as I dislike bash, it was a nice experience to have.
+It was great overall and, as much as I find bash confusing and weird sometimes,
+it was a nice experience to have.
 
 # Packaging for Debian Linux
 
@@ -54,7 +55,7 @@ that people maintaining packages for Debian are doing that out of pure volutaris
 which makes it even more impressive in my opinion.
 
 Unfortunetly we couldn't complete the tutorial to its very end since the Perl Team
-did not respond any of our emails. But we still managed to build and create the `.dev`
+did not respond any of our emails. But we still managed to build and create the `.deb`
 package, which was enough to exerience the whole process of packaging a Perl library
 to the Debian's ecossystem.
 
@@ -63,5 +64,5 @@ to the Debian's ecossystem.
 It was an overall great experience. There were moments of frustration and confusion,
 but we managed to go through every obstacle thanks to classmates' support and determination
 to look up solutions for every issue we eventually had. I've learned a lot about `git` and
-`bash` during this last months and I feel my knowledge about `FOSS` and `Linux` in general
+`bash` during these last months and I feel my knowledge about `FOSS` and `Linux` in general
 was significantly improved.
