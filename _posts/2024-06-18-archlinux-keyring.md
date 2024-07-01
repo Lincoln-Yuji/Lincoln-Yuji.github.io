@@ -1,11 +1,10 @@
 ---
-title: 'Updating old archlinux-keyring'
+title: 'Updating old Arch Linux keyrings'
 categories: [Linux, Arch Linux]
 tags: [linux, tutorial]
 ---
 
-Updating your Arch Linux system should be as easy as just
-running:
+Updating your Arch Linux system should be as easy as just running:
 
 ```bash
 $ sudo pacman -Syu
@@ -14,7 +13,7 @@ $ sudo pacman -Syu
 However we all know that's not the case. Since Arch is a bleeding
 edge distro, it's expected that some updates might fail or break.
 
-In particular, one thing that happens quite often is failed upgrades
+In particular, one thing that happens quite often is a failed upgrade
 due to outdated or missing GPG signatures.
 
 # Update your archlinux-keyring package
@@ -35,7 +34,7 @@ $ sudo pacman -Sy archlinux-keyring
 
 It's done! After that, you can just run `pacman -Su` to finish
 your system upgrade. Refer to `Troubleshoot` for possible issues
-some might have with this process.
+you might have with this process.
 
 # Troubleshoot
 
