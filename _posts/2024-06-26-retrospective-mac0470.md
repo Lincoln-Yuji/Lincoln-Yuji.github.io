@@ -7,7 +7,7 @@ tags: [linux]
 I would like to deticate this blog post to talk about my overall
 experience with MAC0470 at IME-USP (2024-01).
 
-# Kernel Pacthes
+# Kernel Patches
 
 I had the opportunity to study and learn how to setup an evironment
 for Kernel development using Virual Machines. Not only that, but I also
