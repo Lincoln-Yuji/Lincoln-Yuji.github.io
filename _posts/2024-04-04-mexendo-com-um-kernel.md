@@ -30,8 +30,8 @@ Outro problema extremamente irritante, pelo menos no Ubuntu, é que muitos coman
 O usuário padrão do sistema é adicionado automaticamente a esses grupos ao instalar esses pacotes em algumas distros. Porém, no meu caso, tive que fazer isso após a instalação dos pacotes. Para adicionar o seu usuário nesses grupos, basta executar:
 
 ```bash
-$ sudo adduser USERNAME libvirt
-$ sudo adduser USERNAME kvm
+sudo usermod -a -G libvirt '<username>'
+sudo usermod -a -G kvm '<username>'
 ```
 
 A última dor de cabeça que eu tive com essa etapa foi com as partições geradas dentro das máquinas virtuais.
