@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 DOCKER_IMG_NAME='chirpy-jekyll-blogs'
+DOCKER_PWD='/usr/src/app'
 
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
@@ -13,9 +14,13 @@ while [[ "$#" -gt 0 ]]; do
       shift
     ;;
     run)
+      # docker run --rm -it -v "${PWD}:${DOCKER_PWD}" -p '4000:4000' "$DOCKER_IMG_NAME"
       docker run --rm -it -p '4000:4000' "$DOCKER_IMG_NAME"
       shift
     ;;
+    update)
+      echo "[WORK IN PROGRES] Not implemented yet..."
+      shift
     *)
       printf 'Invalid command: %s\n' "$1"
       exit 1
