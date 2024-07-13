@@ -13,7 +13,9 @@ Run local server to test changes before deploying them:
 $ bundle exec jekyll s
 ```
 
-Change the GEM_HOME and BUNDLE_HOME variables to local user directory to avoid headache while running `bundle exec jekyll s`:
+Set the `GEM_HOME` and `BUNDLE_HOME` variables to local user's directory because, for some reason,
+the `bundle install` command will install the gems at system's root and you will need super user privileges
+to run the service locally.
 
 ```bash
 $ export GEM_HOME="${HOME}/.local/gems"
@@ -48,7 +50,7 @@ EXPOSE 4000
 #
 # You need to make Jekyll bind to 0.0.0.0 so that it listens on all network
 # interfaces, including the ones used by Docker.
-CMD [ "bundle", "exec", "jekyll", "s", "--host", "0.0.0.0"]
+CMD [ "bundle", "exec", "jekyll", "s", "--host", "0.0.0.0" ]
 ```
 
 Create and run the container:
