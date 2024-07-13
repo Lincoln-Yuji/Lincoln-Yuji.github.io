@@ -6,7 +6,7 @@ The blog itself can be accessed [here](https://lincoln-yuji.github.io/).
 
 ## Useful commands
 
-Run local server to test changes before deploying them
+Run local server to test changes before deploying them:
 
 ```bash
 # This service will run at port 4000 by default
