@@ -16,8 +16,8 @@ $ bundle exec jekyll s
 Change the GEM_HOME and BUNDLE_HOME variables to local user directory to avoid headache while running `bundle exec jekyll s`:
 
 ```bash
-$ export GEM_HOME="$HOME/gems"
-$ export BUNDLE_HOME="$HOME/bundle"
+$ export GEM_HOME="${HOME}/.local/gems"
+$ export BUNDLE_HOME="${HOME}/.local/bundle"
 ```
 
 # Using docker to test the deploy inside containers (TODO)
