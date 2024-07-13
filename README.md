@@ -9,6 +9,7 @@ The blog itself can be accessed [here](https://lincoln-yuji.github.io/).
 Run local server to test changes before deploying them
 
 ```bash
+# This service will run at port 4000 by default
 $ bundle exec jekyll s
 ```
 
@@ -18,3 +19,7 @@ Change the GEM_HOME and BUNDLE_HOME variables to local user directory to avoid h
 $ export GEM_HOME="$HOME/gems"
 $ export BUNDLE_HOME="$HOME/bundle"
 ```
+
+# Using docker to test the deploy inside containers (TODO)
+
+**Work in Progress...**
