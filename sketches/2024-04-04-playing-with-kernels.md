@@ -38,34 +38,49 @@ the detailed tutorials, the due references will be made in each folloing section
 this blog-post. My focus here is just to show my experience with this process, mentioning
 things either I've learnt, had difficulties with or had issues with.
 
-## Parte 1: Usando QEMU e libvirt
+## Part 1: Using QEMU and libvirt
 
 Tutorial: [Setting up a Linux Kernel Test environment](https://flusp.ime.usp.br/kernel/qemu-libvirt-setup/)
 
-A primeira coisa que lembro quando penso em quais dificuldades que tive para começar esses tutorias certamente é a quantidade de pacotes que precisei baixar. Se você é alguém com uma instalação recente de uma distro Linux ou é uma pessoa que nunca mexeu muito com máquinas virtuais, então vai se surpreender com a quantidade de dependências que você terá que baixar a cada etapa.
+The first this I remember when it comes to difficulties I had t start these tutorials
+was the giant amount of packages I had to install. There are a lot of commands that
+required me to install some additional tools to properly run and complete. I believe
+the tutorials could have some kind of session for required dependencies before proceeding.
 
-Outro problema extremamente irritante, pelo menos no Ubuntu, é que muitos comandos do libvirt requerem permissões de root para serem executados. Porém, mais tarde eu percebi que não é exatamente isso. O libvirt só permite que usuários do grupo `libvirt` e `kvm` possam manipular as máquinas virtuais. Forçar a barra usando `sudo` funciona, mas definitivamente pode representar um risco de segurança e certamente é algo que deveria ser evitado.
+Also, many libvirt commands will need some special permission to be executed. By default,
+libvirt only allows users from `libvirt`. On top of that, you might have some permission
+errors with the kvm hypervisor if your user is not in the `kvm` group.
 
-O usuário padrão do sistema é adicionado automaticamente a esses grupos ao instalar esses pacotes em algumas distros. Porém, no meu caso, tive que fazer isso após a instalação dos pacotes. Para adicionar o seu usuário nesses grupos, basta executar:
-
-```bash
-$ sudo adduser USERNAME libvirt
-$ sudo adduser USERNAME kvm
-```
-
-A última dor de cabeça que eu tive com essa etapa foi com as partições geradas dentro das máquinas virtuais.
-
-No tutorial precisamos fazer o resize do disco da nova imagem `iio_arm64.qcow` usando o comando:
+Solving those issues is very simple. Simply add your user to those groups:
 
 ```bash
-$ virt-resize --expand /dev/sda1 base_iio_arm64.qcow2 iio_arm64.qcow2
+sudo usermod -a -G libvirt '<username>'
+sudo usermod -a -G kvm '<username>'
 ```
 
-O problema desse comando é que algumas vezes ele pode trocar a partição do rootfs do `sda1` para o `sda2`. O tutorial menciona que você deve ter esse cuidado, pois caso isso aconteça será necessário ajustar os próximos comandos do tutorial para usar a partição correta. Se você cegamente copiar e colar todos os comandos sem prestar muito atenção, então terá alguns problemas. No meu caso, ao rodar o script `launch_vm_iio_workshop.sh` a máquina virtual não deu boot e o meu terminal travou completamente.
+The last headache I had on this first part was during the virtual disk expansion step
+using the following command:
 
-Após repetir o tutorial desde o começo, prestando atenção nesse detalhe, consegui concluir essa etapa sem mais problemas.
+```bash
+virt-resize --expand '/dev/sda1' base_iio_arm64.qcow2 iio_arm64.qcow2
+```
 
-Apesar de ter enfrentado alguns erros na hora de configurar o SSH, a seção de Troubleshooting do tutorial foi o suficiente para resolvê-los.
+O problema desse comando é que algumas vezes ele pode trocar a partição do rootfs
+do `sda1` para o `sda2`. O tutorial menciona que você deve ter esse cuidado, pois
+caso isso aconteça será necessário ajustar os próximos comandos do tutorial para
+usar a partição correta. Se você cegamente copiar e colar todos os comandos sem prestar
+muito atenção, então terá alguns problemas. No meu caso, ao rodar o script
+`launch_vm_iio_workshop.sh` a máquina virtual não deu boot e o meu terminal travou
+completamente.
+
+The issue with this command is that sometimes it can change the **rootfs** partition
+from **sda1** to **sda2**. This is warned n the tutorial but I was not payting too much
+attention and was just copying and pasting commands at this point. When I tried running
+the script `launch_vm_iio_workshop.sh` my virtual machine couldn't boot and my entire
+tty session crashed.
+
+I had some problems setting up SSH, but the *Troubleshooting* session solved them.
+No drama.
 
 ## Parte 2: Fazendo a build do Kernel Linux
 
