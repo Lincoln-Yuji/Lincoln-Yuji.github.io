@@ -21,6 +21,7 @@ while [[ "$#" -gt 0 ]]; do
     update)
       echo "[WORK IN PROGRES] Not implemented yet..."
       shift
+    ;;
     *)
       printf 'Invalid command: %s\n' "$1"
       exit 1
