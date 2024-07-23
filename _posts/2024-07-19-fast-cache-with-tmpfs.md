@@ -21,7 +21,11 @@ These are the two major references I'm linking in this blog post:
 - **Open KDE bug report:** [Bug 487043](https://bugs.kde.org/show_bug.cgi?id=487043)
 - **Brodie Robertson's coverage:** [KDE Plasma Constantly Stuttering, Try This!!](https://www.youtube.com/watch?v=sCoioLCT5_o)
 
-I want to leave here that the KDE version I'm using at the moment is `Plasma 6.1.2`.
+I want to leave here that the KDE version I'm using at the moment is `Plasma 6.1.2`. It seems
+that this issue was partially solved in `6.1.0`. The desktop is not supposed to hang anymore when
+an animation takes too long to get loaded through slow/busy bus channel from drives. However,
+the issue with stuttering animations was not solved as far as I know, since I didn't find anything
+which directly addresses this problem and I'm still facing this issue at `6.1.2`.
 
 # KDE's window manager is loading QML from slow memory
 
