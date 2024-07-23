@@ -79,10 +79,16 @@ SigLevel = Required DatabaseOptional  # Before
 SigLevel = Never                      # After
 ```
 
-This will make `pacman` skip the GPG Key verification step and simply upgrade the packages.
+This will make `pacman` skip the GPG Key verification step and directly upgrade the packages.
 As you might correctly think, this is very dangerous and I really recommend changing this
-configuration back once your system fully upgraded. You will have updated GPG keys in your
-local system, so future upgrade should happen just fine (until something breaks again, we are
-dealing with Arch Linux here).
+configuration back once your system fully upgraded:
 
-Run `sudo pacman -Su` to upgrade the system and remember to change the configuration back.
+1. Update your keyrings with `pacman -Sy archlinux-keyring`
+2. Change back `SigLevel` to **Required DatabaseOptional**
+3. Finish your system update with `pacman -Su`
+
+This is a very well known and old issue with Arch Linux packages and it's incredible how
+the Arch maintainers refuse to fix this crap. There are some third party scripts you might
+find that try to automate typical Arch systems upgrades. Some are very robust and handle multiple
+issues and errors `pacman` might spill. You can take a look at the Garuda Linux scripts to take
+some inspirations and examples.
