@@ -61,7 +61,7 @@ fixing our first devlivered code. However, the maintainers told us to
 $ git rebase --interactive HEAD~4
 ```
 
-This command will catch last 4 commits in the current branch
+This command will catch the last 4 commits in the current branch
 starting from `HEAD` pointer. Then we basically selected:
 
 ```
