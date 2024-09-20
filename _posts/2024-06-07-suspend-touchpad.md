@@ -1,5 +1,5 @@
 ---
-title: 'Using Systemd's sleep service to fix my touchpad'
+title: 'Using Systemd sleep service to fix my touchpad'
 categories: [Linux, Troubleshoot]
 tags: [linux, systemd, bash]
 ---
