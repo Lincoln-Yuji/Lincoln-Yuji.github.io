@@ -6,7 +6,7 @@ on:
       - master
     paths-ignore:
       - .gitignore
-      - sketches
+      - sketches/*
       - README.md
       - LICENSE
 
