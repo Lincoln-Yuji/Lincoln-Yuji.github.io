@@ -172,13 +172,77 @@ conditions are true to create the assignments via `JOIN`. The result follows lik
 | CUO0002_NA_001       | CUO0002_TY002_001    |
 | CUO0002_NA_001       | CUO0002_TY001_001    |
 
-# Conclusion (and next steps...)
+# Final Alocated Cost computation
 
-When it comes to the assignments, we are already done with this result. We were able to associate
-the "None Objects" to their targets while the Complete Objects are only assigned to themselves.
+For simplicity, we didn't bring the costs of them objects in previous section, bu modifying the columns selected we can bring them
+to our output. We will call the following table `OBJECT_COST_ASSIGNMENTS`:
 
-However, **it would be cool if we cover how to calculate the realocated values right?** I'll be covering
-that in the following blog post. For now, we are good!
+| SOURCE_REFERENCE     | COST | TARGET_REFERENCE     | TARGET_COST  |
+|----------------------|------|----------------------|--------------|
+| CUO0001_TY001_001    | 100  | CUO0001_TY001_001    | 100          |
+| CUO0001_TY002_001    | 200  | CUO0001_TY002_001    | 200          |
+| CUO0001_TY003_001    | 730  | CUO0001_TY003_001    | 730          |
+| CUO0002_TY001_001    | 650  | CUO0002_TY001_001    | 650          |
+| CUO0002_TY002_001    | 230  | CUO0002_TY002_001    | 230          |
+| CUO0002_TY003_001    | 190  | CUO0002_TY003_001    | 190          |
+| CUO0003_TY001_001    | 190  | CUO0003_TY001_001    | 190          |
+| CUO0003_TY001_002    | 220  | CUO0003_TY001_002    | 220          |
+| CUO0003_TY001_003    | 500  | CUO0003_TY001_003    | 500          |
+| NA_NA_NA             | 850  | CUO0003_TY001_003    | 500          |
+| NA_NA_NA             | 850  | CUO0003_TY001_002    | 220          |
+| NA_NA_NA             | 850  | CUO0003_TY001_001    | 190          |
+| NA_NA_NA             | 850  | CUO0002_TY003_001    | 190          |
+| NA_NA_NA             | 850  | CUO0002_TY002_001    | 230          |
+| NA_NA_NA             | 850  | CUO0002_TY001_001    | 650          |
+| NA_NA_NA             | 850  | CUO0001_TY003_001    | 730          |
+| NA_NA_NA             | 850  | CUO0001_TY002_001    | 200          |
+| NA_NA_NA             | 850  | CUO0001_TY001_001    | 100          |
+| CUO0001_NA_NA        | 500  | CUO0001_TY003_001    | 730          |
+| CUO0001_NA_NA        | 500  | CUO0001_TY002_001    | 200          |
+| CUO0001_NA_NA        | 500  | CUO0001_TY001_001    | 100          |
+| NA_TY003_NA          | 100  | CUO0002_TY003_001    | 190          |
+| NA_TY003_NA          | 100  | CUO0001_TY003_001    | 730          |
+| NA_NA_002            | 800  | CUO0003_TY001_002    | 220          |
+| CUO0003_TY001_NA     | 710  | CUO0003_TY001_003    | 500          |
+| CUO0003_TY001_NA     | 710  | CUO0003_TY001_002    | 220          |
+| CUO0003_TY001_NA     | 710  | CUO0003_TY001_001    | 190          |
+| CUO0002_NA_001       | 280  | CUO0002_TY003_001    | 190          |
+| CUO0002_NA_001       | 280  | CUO0002_TY002_001    | 230          |
+| CUO0002_NA_001       | 280  | CUO0002_TY001_001    | 650          |
+
+From the table `OBJECT_COST_ASSIGNMENTS`, we can use the following SQL command to get the final alocated cost proportional to the target's cost for each source object:
+
+```sql
+SELECT TARGET_REFERENCE AS REFERENCE, SUM(ALOCATED_COST) AS FINAL_COST FROM (
+  SELECT *, COST * (TARGET_COST / (SUM(TARGET_COST) OVER (PARTITION BY SOURCE_REFERENCE))) AS ALOCATED_COST
+  FROM OBJECT_COST_ASSIGNMENTS
+) AS INNER_COMPUTED_ALLOCATION
+GROUP BY TARGET_REFERENCE
+ORDER BY REFERENCE;
+```
+
+The inner query computes them sum of all the target costs within the same source object and uses this value as weight for the cost that will
+be alocated in that line. The outer query will aggregate all alocated values for each target object and use their sum as the final cost
+of each target object. The final result follows below:
+
+| REFERENCE           | FINAL_COST          |
+|---------------------|---------------------|
+| CUO0001_TY001_001   | 176.78289197819566  |
+| CUO0001_TY002_001   | 353.56578395639133  |
+| CUO0001_TY003_001   | 1369.8629375277847  |
+| CUO0002_TY001_001   | 1003.6482752196727  |
+| CUO0002_TY002_001   | 355.1370820008073   |
+| CUO0002_TY003_001   | 314.0262851311017   |
+| CUO0003_TY001_001   | 391.89624329159216  |
+| CUO0003_TY001_002   | 1253.7745974955278  |
+| CUO0003_TY001_003   | 1031.3059033989266  |
+
+# Conclusion
+
+There could be alternative ways to calculate the final cost of each complete object, we could use more sofisticated volumetries or formulas,
+but this one gets the job done for our example. We are basically alocating more for objects that already have higher costs, while alocating
+less for objects that don't have much cost. It's a criteria we defined that could be considered fair with no additional context. That
+should be enough to understand the ideia of reallocating costs of "None Objects" to "Complete Objects".
 
 I hope this can help anyone to apreciate how many interesting things we can do with JOINs in order to
 perform conditional assignments between multiple SQL tables very creatively.
