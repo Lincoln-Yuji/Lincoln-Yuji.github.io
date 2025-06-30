@@ -4,8 +4,7 @@ categories: [AWS, EC2]
 tags: [aws, ec2, rds, linux]
 ---
 
-For this blogpost, we will be using the application first showed in my previous post:
-[Building a Quarkus CRUD application](/_posts/2025-06-13-building-crud-quarkus-app.md)
+For this blogpost, we will be using the application first showed in my previous post **Building a Quarkus CRUD application**.
 
 # Creating a simple infrastructure for our application
 
@@ -39,4 +38,8 @@ $ terraform apply
 
 # Deploy and run the code in the EC2 instance
 
+**TODO**
+
 # Testing the API using Postman
+
+**TODO**
